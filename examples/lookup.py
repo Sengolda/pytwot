@@ -1,9 +1,9 @@
 """
 This is a simple code for user and tweet lookup!
 """
-import pytweet
+import pytwot
 
-client = pytweet.Client(
+client = pytwot.Client(
     "Your Bearer Token Here!!!",
     consumer_key="Your consumer_key here",
     consumer_secret="Your consumer_secret here",

@@ -2,10 +2,10 @@
 A Simple twitter bot for responds commands using twitter account activity api (events)
 Before making this simple bot, you have to create an environment in https://apps.twitter.com.
 """
-import pytweet
+import pytwot
 from flask import Flask
 
-client = pytweet.Client(
+client = pytwot.Client(
     "Your Bearer Token Here!!!",
     consumer_key="Your consumer_key here",
     consumer_secret="Your consumer_secret here",
@@ -17,7 +17,7 @@ client.webapp = Flask(__name__)
 
 
 @client.event
-def on_direct_message(message: pytweet.DirectMessage):
+def on_direct_message(message: pytwot.DirectMessage):
     if message.author == client.account:
         return  # To avoid the client talking to itself.
 

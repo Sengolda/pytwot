@@ -1,7 +1,7 @@
-pytweet
+pytwot
 =======
 
 .. toctree::
    :maxdepth: 4
 
-   pytweet
+   pytwot

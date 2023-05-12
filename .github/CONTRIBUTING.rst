@@ -2,7 +2,7 @@
 Contributing
 ============
 
-Welcome to ``PyTweet``'s contributor's guide.
+Welcome to ``pytwot``'s contributor's guide.
 
 This document focuses on getting any potential contributor familiarized
 with the development processes, but `other kinds of contributions` are also
@@ -11,7 +11,7 @@ appreciated.
 Issue Reports
 =============
 
-If you experience bugs or general issues with ``pytweet``, please have a look
+If you experience bugs or general issues with ``pytwot``, please have a look
 on the `issue tracker`. If you don't see anything useful there, please feel
 free to open an issue report.
 
@@ -19,13 +19,13 @@ free to open an issue report.
 Documentation Improvements
 ==========================
 
-You can help improve ``pytweet`` docs by making them more readable and coherent, or
+You can help improve ``pytwot`` docs by making them more readable and coherent, or
 by adding missing information and correcting mistakes.
 
-``pytweet`` documentation uses Sphinx as its main documentation compiler.
+``pytwot`` documentation uses Sphinx as its main documentation compiler.
 This means that the docs are kept in the same repository as the project code, and
 that any documentation update is done in the same way was a code contribution.
-**NOTE**: PyTweet's docs uses reStructuredText
+**NOTE**: pytwot's docs uses reStructuredText
 
 When working on documentation changes in your local machine, you can
 compile them using the following commands:
@@ -41,13 +41,13 @@ compile them using the following commands:
 Code formatting
 ==================
 
-This project (``PyTweet``) follows the black code-style with line-length as ``120``
+This project (``pytwot``) follows the black code-style with line-length as ``120``
 You can use black easily by doing:
 
 .. code:: bash
 
     pip install black
-    black setup.py pytweet --line-length 120
+    black setup.py pytwot --line-length 120
 
 
 If you want to see what changes black will make, you can do:
@@ -55,7 +55,7 @@ If you want to see what changes black will make, you can do:
 .. code:: bash
 
     pip install black
-    black --diff setup.py pytweet --line-length 120
+    black --diff setup.py pytwot --line-length 120
 
 
 Testing
@@ -89,8 +89,8 @@ Clone the repository
    page. This creates a copy of the code under your account on github.
 #. Clone this copy to your local disk::
 
-    git clone https://github.com/YOUR_NAME/PyTweet
-    cd pytweet
+    git clone https://github.com/YOUR_NAME/pytwot
+    cd pytwot
 
 #. You should run::
 

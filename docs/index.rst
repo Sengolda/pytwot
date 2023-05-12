@@ -4,9 +4,11 @@
     :alt: Alternative text
     :align: center
 
-Welcome to PyTweet's documentation!
+Welcome to pytwot's documentation!
 ===================================
-PyTweet is a Synchronous python API wrapper for twitter's api, Its filled with rich features and is very easy to use.
+- pytwot is a Synchronous python API wrapper for twitter's api, Its filled with rich features and is very easy to use.
+- Fork of the original PyTweet_ but it is approved by the original developers
+.. _PyTweet: http://github.com/PyTweet/PyTweet
 
 
 Features:
@@ -18,7 +20,7 @@ Features:
 
 Getting started
 -----------------
-- Is this your first time using PyTweet? This is the place to get started!
+- Is this your first time using pytwot? This is the place to get started!
 - **Quickstart** :doc:`quickstart`
 
 

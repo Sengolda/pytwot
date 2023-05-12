@@ -29,7 +29,7 @@ jobs:
         run: |
           npm install -g pyright
           pip install .
-          pyright --lib --verifytypes pytweet --ignoreexternal || true
+          pyright --lib --verifytypes pytwot --ignoreexternal || true
   black:
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +40,7 @@ jobs:
         uses: psf/black@stable
         with:
           options: "-l 120 --check"
-          src: "./pytweet"
+          src: "./pytwot"
   
   codespell:
     runs-on: ubuntu-latest
@@ -57,4 +57,4 @@ jobs:
       - name: Run Codespell
         run: |
           pip install codespell
-          codespell pytweet
+          codespell pytwot

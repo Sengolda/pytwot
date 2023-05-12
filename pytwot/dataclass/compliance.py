@@ -1,3 +1,4 @@
+"""
 The MIT License (MIT)
 
 Copyright (c) 2021-present UnrealFar & TheGenocides
@@ -20,3 +21,25 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+"""
+
+import datetime
+
+from dataclasses import dataclass
+from typing import Optional
+from ..type import ID
+from ..enums import JobResultAction, JobResultActionReason
+
+
+@dataclass
+class JobResult:
+    """Represents a download result from a job.
+
+    .. versionadded:: 1.5.0
+    """
+
+    id: ID
+    action: JobResultAction
+    reason: JobResultActionReason
+    created_at: datetime.datetime
+    redacted_at: Optional[datetime.datetime] = None

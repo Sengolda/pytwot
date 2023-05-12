@@ -1,9 +1,9 @@
-.. currentmodule:: pytweet
+.. currentmodule:: pytwot
 
 API Reference
 ===============
 
-The following section outlines the API of pytweet.
+The following section outlines the API of pytwot.
 
 .. note::
 
@@ -78,14 +78,14 @@ Space
 List
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. autoclass:: pytweet.List()
+.. autoclass:: pytwot.List()
     :members:
 
 
 Job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. autoclass:: pytweet.Job()
+.. autoclass:: pytwot.Job()
     :members:
 
 
@@ -1577,9 +1577,9 @@ All of these enums are a subclass of :class:`enum.Enum`
 Errors
 -------
 
-Error raised by pytweet.
+Error raised by pytwot.
 
-.. autoexception:: PytweetException
+.. autoexception:: pytwotException
 
 .. autoexception:: APIException
 

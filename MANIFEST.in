@@ -2,6 +2,6 @@ include twitter/*.py
 include LICENSE
 include *.py
 exclude *.replit
-include pytweet/py.typed
+include pytwot/py.typed
 include requirements.txt
 include language.json

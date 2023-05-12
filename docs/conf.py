@@ -11,8 +11,6 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 
-"""NOTE: that configuration file is taken directly from discord.py."""
-
 import re
 
 
@@ -25,8 +23,8 @@ sys.path.append(os.path.abspath("ext"))
 
 # -- Project information -----------------------------------------------------
 
-project = "PyTweet"
-copyright = "2021-present, TheGenocide, UnrealFar"
+project = "pytwot"
+copyright = "2021-present, TheGenocide, UnrealFar, 2023-present Sengolda"
 author = "TheGenocide & UnrealFar"
 
 
@@ -44,6 +42,7 @@ extensions = [
     "sphinx.ext.napoleon",
     # Third-Party Extensions:
     "docs.ext.authorize",
+    "sphinx_copybutton",
 ]
 
 autodoc_member_order = "bysource"
@@ -51,8 +50,8 @@ autodoc_typehints = "none"
 autodoc_inherit_docstrings = False
 
 extlinks = {
-    "issue": ("https://github.com/UnrealFar/PyTweet/issues/%s", ""),
-    "gh": ("https://github.com/UnrealFar/PyTweet/%s", ""),
+    "issue": ("https://github.com/sengolda/pytwot/issues/%s", ""),
+    "gh": ("https://github.com/sengolda/pytwot/%s", ""),
     "discord": ("https://discord.com/invite/XHBhg6A4jJ/%s", ""),
 }
 
@@ -72,7 +71,7 @@ master_doc = "index"
 
 version = ""
 try:
-    with open("../pytweet/__init__.py") as f:
+    with open("../pytwot/__init__.py") as f:
         version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 except Exception:
     pass
@@ -109,7 +108,7 @@ pygments_style = "friendly"
 # -- Options for HTML output -------------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "pytweet.pydoc"
+htmlhelp_basename = "pytwot.pydoc"
 
 # Output is processed with HTML5 writer. Default is False.
 html_experimental_html5_writer = True

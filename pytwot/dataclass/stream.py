@@ -1,3 +1,4 @@
+"""
 The MIT License (MIT)
 
 Copyright (c) 2021-present UnrealFar & TheGenocides
@@ -20,3 +21,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+"""
+
+from dataclasses import dataclass
+from typing import Optional
+from ..type import ID
+
+
+@dataclass
+class StreamRule:
+    """Represents a stream rule.
+
+    .. versionadded:: 1.3.5
+    """
+
+    value: str
+    tag: Optional[str] = None
+    id: Optional[ID] = None
