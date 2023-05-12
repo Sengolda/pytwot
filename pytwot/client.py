@@ -146,12 +146,12 @@ class Client:
         return "Client({0.account!r})".format(self)
 
     def account(self, *, update: bool = False) -> Optional[ClientAccount]:
-        """Returns :class:`ClientAccount` object which hold the client's informations as a twitter user.
+        """Returns :class:`ClientAccount` object which hold the client's information as a twitter user.
 
         Parameters
         ------------
         update: :class:`bool`
-            Indicates to update the client's account information, setting update to True would make a request to the api and returns a new and updated data everytime. If sets to False, it will either make a request (if used the first time) or use the previous data stored in an instance variable.
+            Indicates to update the client's account information, setting update to True would make a request to the api and returns a new and updated data every time. If sets to False, it will either make a request (if used the first time) or use the previous data stored in an instance variable.
 
             .. versionadded:: 1.5.0
 
@@ -177,7 +177,7 @@ class Client:
         Parameters
         ------------
         update: :class:`bool`
-            Indicates to update the client's account information, setting update to True would make a request to the api and returns a new and updated data everytime. If sets to False, it will either make a request (if used the first time) or use the previous data stored in an instance variable.
+            Indicates to update the client's account information, setting update to True would make a request to the api and returns a new and updated data every time. If sets to False, it will either make a request (if used the first time) or use the previous data stored in an instance variable.
 
             .. versionadded:: 1.5.0
 
@@ -373,7 +373,7 @@ class Client:
 
         .. warning
 
-            This will cause error if `space_host` paramater is True and the client is not the host of the Space!
+            This will cause error if `space_host` parameter is True and the client is not the host of the Space!
 
 
         Parameters

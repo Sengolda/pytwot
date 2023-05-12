@@ -331,12 +331,12 @@ class OauthSession:
         self.http_client.request("POST", "1.1", "/oauth/invalidate_token", auth=True)
 
     def verify_credentials(self, *, raise_error: bool = True) -> Optional[bool]:
-        """Verify the credentials are correct. Returns a boolean whether its succesful or not if raise_error turns to False. Default to True
+        """Verify the credentials are correct. Returns a boolean whether its successful or not if raise_error turns to False. Default to True
 
         Parameters
         ------------
         raise_error: :class:`bool`
-            Indicates whether to raise if the credentials are wrong. If sets to False, the method will returns a boolean, True for succesful and False for error.
+            Indicates whether to raise if the credentials are wrong. If sets to False, the method will returns a boolean, True for successful and False for error.
 
         Raises
         --------
