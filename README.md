@@ -21,16 +21,9 @@
 <img src="https://img.shields.io/discord/858312394236624957?color=blue&label=pytwot&logo=discord">
 
 
-<img src='https://readthedocs.org/projects/py-tweet/badge/?version=latest' alt='Documentation Status' />
+<img src='https://readthedocs.org/projects/pytwot/badge/?version=latest' alt='Documentation Status' />
 
 
-<img src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fstandard">
-
-
-<img src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fpremium">
-
-
-<img src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fv2">
 
 </div>
 <br>
