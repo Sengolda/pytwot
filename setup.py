@@ -38,11 +38,7 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
 ]
 
-packages = [
-    "pytwot",
-    "pytwot.dataclass",
-    "pytwot.threads"
-]
+packages = ["pytwot", "pytwot.dataclass", "pytwot.threads"]
 
 # fmt: off
 

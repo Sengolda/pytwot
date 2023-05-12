@@ -11,6 +11,7 @@ mapping = {
     "3": "Oauth 2.0: Authorization Code with PKCE",
 }
 
+
 # Create the authorize object, inherits nodes.Admonition to look like info or warn directive.
 class authorize(nodes.Admonition, nodes.Element):
     pass
@@ -26,7 +27,6 @@ def depart_authorize_node(self, node):
 
 # Create the directive.
 class AuthorizeDirective(SphinxDirective):
-
     # this enables content in the directive
     has_content = True
 

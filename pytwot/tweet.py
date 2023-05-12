@@ -693,9 +693,7 @@ class Tweet(Message):
             "max_results": 100,
         }
 
-        if res := self.http_client.request(
-            "GET", "2", f"/tweets/{self.id}/quote_tweets", params=params
-        ):
+        if res := self.http_client.request("GET", "2", f"/tweets/{self.id}/quote_tweets", params=params):
             return TweetPagination(
                 res,
                 endpoint_request=f"/tweets/{self.id}/quote_tweets",

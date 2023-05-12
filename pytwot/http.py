@@ -619,9 +619,7 @@ class HTTPClient:
             "2",
             f"/spaces/{space_id}",
             params={
-                "expansions": SPACE_EXPANSION
-                if not space_host
-                else COMPLETE_SPACE_FIELD,
+                "expansions": SPACE_EXPANSION if not space_host else COMPLETE_SPACE_FIELD,
                 "space.fields": SPACE_FIELD,
                 "topic.fields": TOPIC_FIELD,
                 "user.fields": USER_FIELD,
@@ -770,9 +768,7 @@ class HTTPClient:
             "/compliance/jobs",
             params={
                 "type": type.value,
-                "status": status.value
-                if isinstance(status, JobStatus)
-                else status,
+                "status": status.value if isinstance(status, JobStatus) else status,
             },
         )
 
