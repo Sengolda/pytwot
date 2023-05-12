@@ -294,7 +294,6 @@ class HTTPClient:
                 remaining = int(response.headers["x-rate-limit-reset"])
                 sleep_for = (remaining - int(time.time())) + 1
                 _log.warn(f"Client is ratelimited. Sleeping for {sleep_for}")
-                print(f"Client is ratelimited. Sleeping for {sleep_for}")
                 time.sleep(sleep_for)
                 return self.request(
                     method,
