@@ -239,8 +239,7 @@ class Scope:
         value = ""
         for attr in dir(self):
             if "_read" in attr or "_write" in attr or "_access" in attr:
-                scope = getattr(self, attr, None)
-                if scope:
+                if scope := getattr(self, attr, None):
                     value += f"{attr.replace('_', '.')}%20"
 
         return value.rstrip("%20")  # Only remove the last %20.
@@ -314,10 +313,10 @@ class OauthSession:
 
         .. versionadded:: 1.5.0
         """
-        if not self.client_id and not self.client_secret:
+        if self.client_id or self.client_secret:
+            return base64.b64encode(bytes(f"{self.client_id}:{self.client_secret}", "utf-8")).decode()
+        else:
             raise pytwotException("'client_id' and 'client_secret' argument is missing in your client instance!")
-
-        return base64.b64encode(bytes(f"{self.client_id}:{self.client_secret}", "utf-8")).decode()
 
     def invalidate_access_token(self) -> None:
         """Invalidate the access token and access token secret of yout client.
@@ -354,7 +353,7 @@ class OauthSession:
         finally:
             if not error:
                 return True
-            elif error and raise_error:
+            elif raise_error:
                 raise error
             else:
                 return False
@@ -388,7 +387,7 @@ class OauthSession:
                 url = f"/request_token?x_auth_access_type={access_type}"
 
             else:
-                url = f"/request_token"
+                url = "/request_token"
 
             request_tokens = self.http_client.request("POST", "oauth", url, auth=self.oauth1)
             data = {}
@@ -435,11 +434,11 @@ class OauthSession:
         ), "Wrong access type passed! must be 'read', 'write', or 'direct_messages')"
         request_tokens = self.generate_request_tokens(access_type)
         authorize_url = (
-            self.http_client.base_url + "oauth/authorize"
+            f"{self.http_client.base_url}oauth/authorize"
             if not signin_with_twitter
-            else self.http_client.base_url + "oauth/authenticate"
+            else f"{self.http_client.base_url}oauth/authenticate"
         )
-        return authorize_url + f"?oauth_token={request_tokens.get('oauth_token')}"
+        return f"{authorize_url}?oauth_token={request_tokens.get('oauth_token')}"
 
     def post_oauth_token(self, oauth_token: str, oauth_verifier: str) -> Optional[Tuple[str]]:
         """Posts the oauth token & verifier. This is the 2nd step(and the last step) of making a request on behalf of other users through oauth1.1 usercontext. Returns a pair of access token & secret also the user's username(present as screen_name) and id e.g ("access_token=xxxxxxxxxxxxx", "access_token_secret=xxxxxxxxxxxxx", "screen_name=TheGenocides", "user_id=1382006704171196419"). Uses the access token and secret to make request on behalf of users! You can use the raw api or construct another client with the access token and secret.
@@ -493,10 +492,10 @@ class OauthSession:
             raise pytwotException("'callback_url' argument is missing in your client instance")
 
         code_challenge_method = code_challenge_method.lower()
-        assert code_challenge_method in [
+        assert code_challenge_method in {
             "plain",
             "s256",
-        ], "Wrong code_challenge_method passed: must be 'plain' or 's256'"
+        }, "Wrong code_challenge_method passed: must be 'plain' or 's256'"
 
         if not state:
             state = "".join(random.choices(string.ascii_uppercase + string.digits, k=10)).lower()
@@ -508,7 +507,7 @@ class OauthSession:
         random_append = randint(1000, 100000)
         rand_dec = randint(300, 800)
         state = base64.b64encode(state.encode()).decode()
-        code_challenge = "{}{}.{}".format(timestamp, random_append, rand_dec)
+        code_challenge = f"{timestamp}{random_append}.{rand_dec}"
         client_id = self.client_id
         response_type = "code"
         scope = scope.value

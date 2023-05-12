@@ -421,7 +421,7 @@ class Client:
 
         .. versionadded:: 1.3.5
         """
-        if state == SpaceState.live or state == SpaceState.scheduled:
+        if state in [SpaceState.live, SpaceState.scheduled]:
             return self.http.fetch_spaces_bytitle(title, state, space_host=space_host)
         else:
             raise UnKnownSpaceState(given_state=state)
@@ -474,7 +474,10 @@ class Client:
 
         res = self.http.payload_parser.parse_message_to_pagination_data(res)
         return MessagePagination(
-            res, endpoint_request=f"/direct_messages/events/list.jsons", http_client=self.http, params=params
+            res,
+            endpoint_request="/direct_messages/events/list.jsons",
+            http_client=self.http,
+            params=params,
         )
 
     def fetch_job(self, id: ID) -> Optional[Job]:
@@ -1152,7 +1155,7 @@ class Client:
                     )
                     digested = base64.b64encode(validation.digest())
 
-                    response = {"response_token": "sha256=" + format(str(digested)[2:-1])}
+                    response = {"response_token": f"sha256={format(str(digested)[2:-1])}"}
 
                     return json.dumps(response)
 
@@ -1203,7 +1206,7 @@ class Client:
             raise e
 
         finally:
-            _log.debug(f"Stop listening due to internal/external problem!")
+            _log.debug("Stop listening due to internal/external problem!")
 
     def listen_to(self, url: str, *, env_label: str, ngrok: bool = False, make_new: bool = True):
         """Listen to upcoming account activity events send by twitter to a web application url. This method differ from :meth:`Client.listen`, this method doesn't use the flask's web application url, rather your web application url. This is good for people that want to implement their web application outside flask.
@@ -1261,7 +1264,7 @@ class Client:
                 f"Listening for events! user cache filled at {len(self.http.user_cache)} users! flask application is running with url: {url}({self.webhook_url_path}).\n Ngrok: {ngrok}\nMake a new webhook when not found: {make_new}\n In Environment: {repr(self.environment)} with webhook: {repr(self.webhook)}."
             )
 
-        elif check and not make_new:
+        elif check:
             raise pytwotException(
                 f"Cannot find url passed: {url} Invalid url passed, please check the spelling of your url"
             )

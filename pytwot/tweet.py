@@ -266,9 +266,11 @@ class Tweet(Message):
         """
         users = []
         for user in self._includes.get("users", {}):
-            for mention in self._entities.get("mentions", {}):
-                if user["id"] == mention["id"]:
-                    users.append(User(user, http_client=self.http_client))
+            users.extend(
+                User(user, http_client=self.http_client)
+                for mention in self._entities.get("mentions", {})
+                if user["id"] == mention["id"]
+            )
         return users
 
     @property
@@ -613,7 +615,7 @@ class Tweet(Message):
 
         .. versionadded:: 1.1.3
         """
-        res = self.http_client.request(
+        if res := self.http_client.request(
             "GET",
             "2",
             f"/tweets/{self.id}/retweeted_by",
@@ -622,20 +624,19 @@ class Tweet(Message):
                 "user.fields": USER_FIELD,
                 "tweet.fields": TWEET_FIELD,
             },
-        )
-        if not res:
+        ):
+            return UserPagination(
+                res,
+                endpoint_request=f"/tweets/{self.id}/retweeted_by",
+                http_client=self.http_client,
+                params={
+                    "expansions": PINNED_TWEET_EXPANSION,
+                    "user.fields": USER_FIELD,
+                    "tweet.fields": TWEET_FIELD,
+                },
+            )
+        else:
             return []
-
-        return UserPagination(
-            res,
-            endpoint_request=f"/tweets/{self.id}/retweeted_by",
-            http_client=self.http_client,
-            params={
-                "expansions": PINNED_TWEET_EXPANSION,
-                "user.fields": USER_FIELD,
-                "tweet.fields": TWEET_FIELD,
-            },
-        )
 
     def fetch_likers(self) -> Optional[UserPagination]:
         """Returns a pagination object with the users that liked the tweet.
@@ -648,7 +649,7 @@ class Tweet(Message):
 
         .. versionadded:: 1.1.3
         """
-        res = self.http_client.request(
+        if res := self.http_client.request(
             "GET",
             "2",
             f"/tweets/{self.id}/liking_users",
@@ -657,21 +658,19 @@ class Tweet(Message):
                 "user.fields": USER_FIELD,
                 "tweet.fields": TWEET_FIELD,
             },
-        )
-
-        if not res:
+        ):
+            return UserPagination(
+                res,
+                endpoint_request=f"/tweets/{self.id}/liking_users",
+                http_client=self.http_client,
+                params={
+                    "expansions": PINNED_TWEET_EXPANSION,
+                    "user.fields": USER_FIELD,
+                    "tweet.fields": TWEET_FIELD,
+                },
+            )
+        else:
             return []
-
-        return UserPagination(
-            res,
-            endpoint_request=f"/tweets/{self.id}/liking_users",
-            http_client=self.http_client,
-            params={
-                "expansions": PINNED_TWEET_EXPANSION,
-                "user.fields": USER_FIELD,
-                "tweet.fields": TWEET_FIELD,
-            },
-        )
 
     def fetch_quoted_tweets(self) -> Optional[TweetPagination]:
         """Returns a pagination object for tweets that quoted the tweet
@@ -694,14 +693,14 @@ class Tweet(Message):
             "max_results": 100,
         }
 
-        res = self.http_client.request("GET", "2", f"/tweets/{self.id}/quote_tweets", params=params)
-
-        if not res:
+        if res := self.http_client.request(
+            "GET", "2", f"/tweets/{self.id}/quote_tweets", params=params
+        ):
+            return TweetPagination(
+                res,
+                endpoint_request=f"/tweets/{self.id}/quote_tweets",
+                http_client=self.http_client,
+                params=params,
+            )
+        else:
             return []
-
-        return TweetPagination(
-            res,
-            endpoint_request=f"/tweets/{self.id}/quote_tweets",
-            http_client=self.http_client,
-            params=params,
-        )
