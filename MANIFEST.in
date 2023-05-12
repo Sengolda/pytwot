@@ -4,4 +4,3 @@ include *.py
 exclude *.replit
 include pytwot/py.typed
 include requirements.txt
-include language.json
