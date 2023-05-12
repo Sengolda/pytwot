@@ -1,5 +1,5 @@
 <h2 align="center">pytwot</h2>
-<p>This project is a fork of the now archived [PyTweet](https://github.com/PyTweet/PyTweet)</p>
+<p>This project is a fork of the now archived <a href="https://github.com/PyTweet/PyTweet">PyTweet</a></p>
 <p>VERY IMPORTANT: This project is approved by the PyTweet devs themselves.</p>
 <p>- Another note: the support server given is support server for the original PyTweet as this is approved by the devs they requested the support server stay the same</p>
 
