@@ -292,8 +292,8 @@ class Tweet(Message):
         return None
 
     @property
-    def medias(self) -> Optional[List[Media]]:
-        """Optional[List[:class:`Media`]]: Returns a list of media(s) in a tweet.
+    def media(self) -> Optional[List[Media]]:
+        """Optional[List[:class:`Media`]]: Returns a list of media objects in a tweet.
 
         .. versionadded:: 1.1.0
         """
