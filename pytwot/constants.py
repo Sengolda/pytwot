@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+
 # Expansions & Fields use for extend object data.
 TWEET_EXPANSION = "attachments.poll_ids,attachments.media_keys,author_id,geo.place_id,in_reply_to_user_id,referenced_tweets.id,entities.mentions.username,referenced_tweets.id.author_id"
 SPACE_EXPANSION = "invited_user_ids,speaker_ids,creator_id,host_ids,topic_ids"
@@ -30,12 +31,12 @@ LIST_EXPANSION = "owner_id"
 PINNED_TWEET_EXPANSION = "pinned_tweet_id"
 
 TWEET_FIELD = "attachments,author_id,context_annotations,conversation_id,created_at,geo,entities,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld"
-COMPLETE_TWEET_FIELD = TWEET_FIELD + ",organic_metrics,promoted_metrics"
-TWEET_FIELD_WITH_ORGANIC_METRICS = TWEET_FIELD + ",organic_metrics"
-TWEET_FIELD_WITH_PROMOTED_METRICS = TWEET_FIELD + ",promoted_metrics"
+COMPLETE_TWEET_FIELD = f"{TWEET_FIELD},organic_metrics,promoted_metrics"
+TWEET_FIELD_WITH_ORGANIC_METRICS = f"{TWEET_FIELD},organic_metrics"
+TWEET_FIELD_WITH_PROMOTED_METRICS = f"{TWEET_FIELD},promoted_metrics"
 USER_FIELD = "created_at,description,entities,id,location,name,profile_image_url,protected,public_metrics,url,username,verified,withheld,pinned_tweet_id"
 SPACE_FIELD = "host_ids,created_at,creator_id,id,lang,invited_user_ids,participant_count,speaker_ids,started_at,state,title,updated_at,scheduled_start,is_ticketed"
-COMPLETE_SPACE_FIELD = SPACE_FIELD + ",subscriber_count"
+COMPLETE_SPACE_FIELD = f"{SPACE_FIELD},subscriber_count"
 MEDIA_FIELD = "duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width"
 PLACE_FIELD = "contained_within,country,country_code,full_name,geo,id,name,place_type"
 POLL_FIELD = "duration_minutes,end_datetime,id,options,voting_status"
