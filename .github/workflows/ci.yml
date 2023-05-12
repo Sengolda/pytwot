@@ -73,4 +73,4 @@ jobs:
       - name: Run Isort
         run: |
           pip install isort
-          isort pytwot --check --src pytwot/* setup.py
+          isort --check setup.py pytwot/*
