@@ -80,7 +80,7 @@ if version:
     release = version
 
 # This assumes a tag is available for final releases
-branch = "master" if version.endswith("a") else f"v{version}"
+branch = "master" if version.endswith(("a", "b", "rc")) else f"v{version}"
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
