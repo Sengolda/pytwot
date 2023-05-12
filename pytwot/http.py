@@ -197,7 +197,7 @@ class HTTPClient:
         else:
             url = self.upload_url + version + path
 
-        user_agent = "Py-Tweet (https://github.com/sengolda/pytwot/) Python/{0[0]}.{0[1]}.{0[2]} requests/{1}"
+        user_agent = "pytwot(https://github.com/sengolda/pytwot/) Python/{0[0]}.{0[1]}.{0[2]} requests/{1}"
         if "Authorization" not in headers.keys():
             headers["Authorization"] = f"Bearer {self.bearer_token}"
 
