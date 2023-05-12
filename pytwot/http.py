@@ -226,7 +226,7 @@ class HTTPClient:
         method = method.upper()
         if thread_session:
             executor = self.thread_manager.create_new_executor(thread_name=thread_name, session_id=thread_session)
-            future = executor.submit(
+            return executor.submit(
                 self.request,
                 method,
                 version,
@@ -238,8 +238,6 @@ class HTTPClient:
                 files=files,
                 auth=auth,
             )
-            return future
-
         else:
             response = self.__session.request(
                 method,
@@ -264,14 +262,13 @@ class HTTPClient:
             )
 
             if code in (201, 202, 204):
-                if is_json:
-                    try:
-                        res = response.json()
-                    except JSONDecodeError:
-                        return response.text
-                else:
+                if not is_json:
                     return response.text
 
+                try:
+                    res = response.json()
+                except JSONDecodeError:
+                    return response.text
                 return res
 
             elif code == 400:
@@ -290,43 +287,41 @@ class HTTPClient:
                 raise Conflict(response)
 
             elif code in (420, 429):  # 420 status code is an unofficial extension by Twitter.
-                if self.sleep_after_ratelimit:
-                    remaining = int(response.headers["x-rate-limit-reset"])
-                    sleep_for = (remaining - int(time.time())) + 1
-                    _log.warn(f"Client is ratelimited. Sleeping for {sleep_for}")
-                    print(f"Client is ratelimited. Sleeping for {sleep_for}")
-                    time.sleep(sleep_for)
-                    return self.request(
-                        method,
-                        version,
-                        path,
-                        headers=headers,
-                        params=params,
-                        data=data,
-                        json=json,
-                        files=files,
-                        auth=auth,
-                    )
-
-                else:
+                if not self.sleep_after_ratelimit:
                     raise TooManyRequests(response)
+
+                remaining = int(response.headers["x-rate-limit-reset"])
+                sleep_for = (remaining - int(time.time())) + 1
+                _log.warn(f"Client is ratelimited. Sleeping for {sleep_for}")
+                print(f"Client is ratelimited. Sleeping for {sleep_for}")
+                time.sleep(sleep_for)
+                return self.request(
+                    method,
+                    version,
+                    path,
+                    headers=headers,
+                    params=params,
+                    data=data,
+                    json=json,
+                    files=files,
+                    auth=auth,
+                )
 
             elif code == 431:
                 raise FieldsTooLarge(response)
 
-            if is_json:
-                try:
-                    res = response.json()
-                except JSONDecodeError:
-                    res = response.text
-            else:
+            if not is_json:
                 return response.text
 
+            try:
+                res = response.json()
+            except JSONDecodeError:
+                res = response.text
             if isinstance(res, dict):
                 if res.get("errors"):
                     error = res["errors"][0]
                     if error["type"] == "https://api.twitter.com/2/problems/not-authorized-for-resource":
-                        if not error["parameter"] == "pinned_tweet_id":
+                        if error["parameter"] != "pinned_tweet_id":
                             raise UnauthorizedForResource(error["detail"])
                     elif (
                         error["type"] == "https://api.twitter.com/2/problems/resource-not-found"
@@ -347,7 +342,7 @@ class HTTPClient:
             return res
 
     def upload(self, file: File, command: str):
-        assert command.upper() in ("INIT", "APPEND", "FINALIZE", "STATUS")
+        assert command.upper() in {"INIT", "APPEND", "FINALIZE", "STATUS"}
         thread_session = self.thread_manager.generate_thread_session()
 
         def check_status(processing_info, media_id):
@@ -404,11 +399,7 @@ class HTTPClient:
             segment_id = 0
             bytes_sent = 0
             path = file.path
-            if isinstance(path, io.IOBase):
-                open_file = path
-            else:
-                open_file = open(path, "rb")
-
+            open_file = path if isinstance(path, io.IOBase) else open(path, "rb")
             if not file.media_id:
                 raise ValueError("'media_id' is None! Please specified it.")
 
@@ -515,7 +506,7 @@ class HTTPClient:
         data = self.request(
             "GET",
             "2",
-            f"/users/me",
+            "/users/me",
             params={
                 "expansions": PINNED_TWEET_EXPANSION,
                 "user.fields": USER_FIELD,
@@ -626,9 +617,11 @@ class HTTPClient:
         res = self.request(
             "GET",
             "2",
-            f"/spaces/{str(space_id)}",
+            f"/spaces/{space_id}",
             params={
-                "expansions": SPACE_EXPANSION if not space_host else COMPLETE_SPACE_FIELD,
+                "expansions": SPACE_EXPANSION
+                if not space_host
+                else COMPLETE_SPACE_FIELD,
                 "space.fields": SPACE_FIELD,
                 "topic.fields": TOPIC_FIELD,
                 "user.fields": USER_FIELD,
@@ -736,7 +729,7 @@ class HTTPClient:
             "GET",
             "1.1",
             "/direct_messages/welcome_messages/show.json",
-            params={"id": str(welcome_message_id)},
+            params={"id": welcome_message_id},
             auth=True,
         )
 
@@ -774,14 +767,16 @@ class HTTPClient:
         res = self.request(
             "GET",
             "2",
-            f"/compliance/jobs",
-            params={"type": type.value, "status": status.value if isinstance(status, JobStatus) else status},
+            "/compliance/jobs",
+            params={
+                "type": type.value,
+                "status": status.value
+                if isinstance(status, JobStatus)
+                else status,
+            },
         )
 
-        if not res:
-            return []
-
-        return [Job(data) for data in res["data"]]
+        return [] if not res else [Job(data) for data in res["data"]]
 
     def search_geo(
         self,
@@ -838,7 +833,7 @@ class HTTPClient:
             thread_name="post-tweet-file-request", session_id=thread_session
         )
         message_data = data["event"]["message_create"]["message_data"]
-        message_data["text"] = str(text)
+        message_data["text"] = text
 
         if file:
             future = executor.submit(self.quick_upload, file)
@@ -857,9 +852,7 @@ class HTTPClient:
 
         if file:
             file = future.result()
-            message_data["attachment"] = {}
-            message_data["attachment"]["type"] = "media"
-            message_data["attachment"]["media"] = {}
+            message_data["attachment"] = {"type": "media", "media": {}}
             message_data["attachment"]["media"]["id"] = str(file.media_id)
 
         res = self.request(
@@ -903,28 +896,24 @@ class HTTPClient:
             payload["text"] = text
 
         if file:
-            payload["media"] = {}
-            payload["media"]["media_ids"] = []
+            payload["media"] = {"media_ids": []}
             executor.submit(self.quick_upload, file)
 
         if files:
             if len(files) + 1 if file else len(files) > 4:
                 raise BadRequests(message="Cannot upload more then 4 files!")
 
-            payload["media"] = {}
-            payload["media"]["media_ids"] = []
+            payload["media"] = {"media_ids": []}
             for file in files:
                 executor.submit(self.quick_upload, file)
 
         if poll:
-            payload["poll"] = {}
-            payload["poll"]["duration_minutes"] = int(poll.duration)
-            payload["poll"]["options"] = [option.label for option in poll.options]
-
+            payload["poll"] = {
+                "duration_minutes": int(poll.duration),
+                "options": [option.label for option in poll.options],
+            }
         if geo:
-            payload["geo"] = {}
-            payload["geo"]["place_id"] = geo.id if isinstance(geo, Geo) else geo
-
+            payload["geo"] = {"place_id": geo.id if isinstance(geo, Geo) else geo}
         if direct_message_deep_link:
             payload["direct_message_deep_link"] = direct_message_deep_link
 
@@ -945,12 +934,9 @@ class HTTPClient:
         if exclude_reply_users:
             ids = [str(user.id) if isinstance(user, User) else str(user) for user in exclude_reply_users]
 
-            if "reply" in payload.keys():
-                payload["reply"]["exclude_reply_user_ids"] = ids
-            else:
+            if "reply" not in payload.keys():
                 payload["reply"] = {}
-                payload["reply"]["exclude_reply_user_ids"] = ids
-
+            payload["reply"]["exclude_reply_user_ids"] = ids
         if media_tagged_users:
             if not payload.get("media"):
                 raise pytwotException("Cannot tag users without any file!")
@@ -1050,9 +1036,7 @@ class HTTPClient:
             message_data["ctas"] = cta.raw_buttons
 
         if file:
-            message_data["attachment"] = {}
-            message_data["attachment"]["type"] = "media"
-            message_data["attachment"]["media"] = {}
+            message_data["attachment"] = {"type": "media", "media": {}}
             message_data["attachment"]["media"]["id"] = str(file_future.result().media_id)
 
         res = self.request(
@@ -1104,9 +1088,7 @@ class HTTPClient:
             message_data["ctas"] = cta.raw_buttons
 
         if file:
-            message_data["attachment"] = {}
-            message_data["attachment"]["type"] = "media"
-            message_data["attachment"]["media"] = {}
+            message_data["attachment"] = {"type": "media", "media": {}}
             message_data["attachment"]["media"]["id"] = str(file_future.result().media_id)
 
         res = self.request(
