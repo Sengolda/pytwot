@@ -35,7 +35,7 @@ from .user import *
 from .utils import *
 
 __title__ = "pytwot"
-__version__ = "1.5.0a10"
+__version__ = "1.5.0"
 __author__ = "Sengolda"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present UnrealFar & TheGenocides, 2023-present Sengolda"
@@ -49,7 +49,7 @@ class VersionInfo(NamedTuple):
     serial: int
 
 
-version_info: VersionInfo = VersionInfo(major=1, minor=5, micro=0, releaselevel="alpha", serial=10)
+version_info: VersionInfo = VersionInfo(major=1, minor=5, micro=0, releaselevel="final", serial=1)
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
