@@ -132,7 +132,7 @@ class Client:
             client_id=client_id,
             client_secret=client_secret,
             use_bearer_only=use_bearer_only,
-            sleep_after_ratelimit=handle_ratelimits,
+            handle_ratelimits=handle_ratelimits,
         )
         self._account_user: Optional[User] = None  # set in account property.
         self.webhook: Optional[Webhook] = None

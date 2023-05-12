@@ -1,3 +1,8 @@
+# pytwot (1.5.1-final)
+
+### Bug fixes
+- Fixed major bug in `HTTPClient` that broke the whole lib.
+
 # pytwot (1.5.0-final)
 
 ### Changes
