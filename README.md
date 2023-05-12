@@ -73,7 +73,7 @@ You can check in the `examples` directory for more example code.
 
 # Links
 
-- [Documentation](https://py-tweet.readthedocs.io/en/latest/)
+- [Documentation](https://pytwot.readthedocs.io/en/latest/)
 
 - [Support Server](https://discord.gg/XHBhg6A4jJ)
 
