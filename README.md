@@ -8,9 +8,6 @@
 
 <img src="https://img.shields.io/badge/code%20style-black-000000.svg">  
 
-<img alt="PyPI - License" src="https://img.shields.io/pypi/l/pytwot">
-
-<img alt="Total Downloads" src="https://pepy.tech/badge/pytwot">
 
 <img src="https://img.shields.io/github/commit-activity/m/sengolda/pytwot?color=turquoise&logo=github&logoColor=black">
 
