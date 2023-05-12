@@ -99,7 +99,7 @@ class HTTPClient:
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
         use_bearer_only: bool = False,
-        sleep_after_ratelimit: bool = False,
+        handle_ratelimits: bool = True,
     ):
         self.credentials = {
             "bearer_token": bearer_token,
@@ -149,7 +149,7 @@ class HTTPClient:
         self.event_parser = EventParser(self)
         self.payload_parser = self.event_parser.payload_parser
         self.thread_manager = ThreadManager()
-        self.sleep_after_ratelimit = sleep_after_ratelimit
+        self.handle_ratelimits = handle_ratelimits
         self.current_header = None
         self.message_cache = {}
         self.tweet_cache = {}
@@ -288,7 +288,7 @@ class HTTPClient:
                 raise Conflict(response)
 
             elif code in (420, 429):  # 420 status code is an unofficial extension by Twitter.
-                if not self.sleep_after_ratelimit:
+                if not self.handle_ratelimits:
                     raise TooManyRequests(response)
 
                 remaining = int(response.headers["x-rate-limit-reset"])

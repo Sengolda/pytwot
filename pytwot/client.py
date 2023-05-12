@@ -87,8 +87,8 @@ class Client:
         The client's OAuth 2.0 Client Secret from keys and tokens page.
     use_bearer_only: bool
         Indicates to only use bearer token for all methods. This mean the client is now a twitter-api-client v2 interface. Some methods are unavailable to use such as fetching trends and location, environment fetching methods, and features such as events. Some methods can be recover with OAuth 2 authorization code flow with PKCE with the correct scopes or permissions. Like users.read scope for reading users info which some methods provide a way like :meth:`Client.fetch_user`.
-    sleep_after_ratelimit: :class:`bool`
-        Indicates to sleep when your client is ratelimited, If set to True it won't raise :class:`TooManyRequests` error but it would print a message indicating to sleep, then it sleeps for how many seconds it needs to sleep, after that it continue to restart the request.
+    handle_ratelimits: :class:`bool`
+        Indicates to handle ratelimits and sleep when your client is ratelimited, If set to False it will raise :class:`TooManyRequests` error when ratelimited.
     verify_credentials: :class:`bool`
         Indicates to verify the credentials you specified, this includes consumer_key, consumer_secret, access_token, access_token_secret. make sure to specified all of them in your client, you cannot specified only one of them.
 
@@ -118,7 +118,7 @@ class Client:
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
         use_bearer_only: bool = False,
-        sleep_after_ratelimit: bool = False,
+        handle_ratelimits: bool = True,
         verify_credentials: bool = False,
     ) -> None:
         self.http = HTTPClient(
@@ -132,7 +132,7 @@ class Client:
             client_id=client_id,
             client_secret=client_secret,
             use_bearer_only=use_bearer_only,
-            sleep_after_ratelimit=sleep_after_ratelimit,
+            sleep_after_ratelimit=handle_ratelimits,
         )
         self._account_user: Optional[User] = None  # set in account property.
         self.webhook: Optional[Webhook] = None
