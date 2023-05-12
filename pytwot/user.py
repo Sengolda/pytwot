@@ -25,35 +25,35 @@ SOFTWARE.
 
 from __future__ import annotations
 
-import io
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, Optional, Union, List
+import io
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
 from .constants import (
-    TWEET_EXPANSION,
     LIST_EXPANSION,
-    PINNED_TWEET_EXPANSION,
+    LIST_FIELD,
     MEDIA_FIELD,
+    PINNED_TWEET_EXPANSION,
     PLACE_FIELD,
     POLL_FIELD,
+    TWEET_EXPANSION,
     TWEET_FIELD,
     USER_FIELD,
-    LIST_FIELD,
 )
-from .relations import RelationFollow
-from .utils import time_parse_todt, convert
-from .dataclass import UserSettings, Location
-from .paginations import UserPagination, TweetPagination, ListPagination
+from .dataclass import Location, UserSettings
 from .list import List as TwitterList
 from .objects import Comparable
+from .paginations import ListPagination, TweetPagination, UserPagination
+from .relations import RelationFollow
+from .utils import convert, time_parse_todt
 
 if TYPE_CHECKING:
-    from .message import DirectMessage
-    from .http import HTTPClient
-    from .type import ID
-    from .tweet import Tweet
+    from .attachments import CTA, CustomProfile, File, Geo, QuickReply
     from .enums import Timezone
-    from .attachments import Geo, CTA, CustomProfile, File, QuickReply
+    from .http import HTTPClient
+    from .message import DirectMessage
+    from .tweet import Tweet
+    from .type import ID
 
 
 class User(Comparable):

@@ -26,14 +26,15 @@ SOFTWARE.
 from __future__ import annotations
 
 import datetime
-import requests
 import json
+from typing import TYPE_CHECKING, List, Optional
 
-from typing import Optional, List, TYPE_CHECKING
+import requests
+
+from .dataclass import JobResult
+from .enums import JobResultAction, JobResultActionReason, JobStatus, JobType
 from .objects import Comparable
 from .utils import time_parse_todt
-from .enums import JobType, JobStatus, JobResultAction, JobResultActionReason
-from .dataclass import JobResult
 
 if TYPE_CHECKING:
     from .http import HTTPClient

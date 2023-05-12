@@ -24,7 +24,7 @@ SOFTWARE.
 """
 
 from dataclasses import dataclass
-from typing import Union, Optional
+from typing import Optional, Union
 
 # TODO: Finish adding metrics and stuff
 

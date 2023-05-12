@@ -27,21 +27,22 @@ SOFTWARE.
 from __future__ import annotations
 
 import datetime
-from typing import Any, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional
+
 from dateutil import parser
 
 if TYPE_CHECKING:
     from .type import ID
 
 
-def convert(o: object, annotations: Any):
+def convert(o: object, annotations: Any) -> object:
     try:
         return annotations(o)
     except (ValueError, TypeError):
         return object
 
 
-def guess_mimetype(byts: bytes):
+def guess_mimetype(byts: bytes) -> str:
     if byts[6:10] == b"\x1a\n\x00\x00":
         return "image/png"
 
@@ -109,7 +110,7 @@ def compose_tweet(text: Optional[str] = None) -> str:
     )
 
 
-def compose_user_action(user_id: str, action: str, text: str = None):
+def compose_user_action(user_id: str, action: str, text: str = None) -> str:
     """Make a link that let's you interact with a user with certain actions.
 
     Parameters
@@ -142,7 +143,7 @@ def compose_user_action(user_id: str, action: str, text: str = None):
     )
 
 
-def compose_tweet_action(tweet_id: ID, action: str = None):
+def compose_tweet_action(tweet_id: ID, action: str = None) -> str:
     """Make a link that let's you interact with a tweet with certain actions.
 
     Parameters

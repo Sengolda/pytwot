@@ -24,9 +24,10 @@ SOFTWARE.
 """
 
 from __future__ import annotations
-from typing import Any, List, Tuple, Optional, TYPE_CHECKING
-from .errors import NoPageAvailable
 
+from typing import TYPE_CHECKING, Any, List, Optional, Tuple
+
+from .errors import NoPageAvailable
 
 if TYPE_CHECKING:
     from .http import HTTPClient

@@ -26,23 +26,16 @@ SOFTWARE.
 from __future__ import annotations
 
 import json
-import requests
 import logging
 import time
+from typing import TYPE_CHECKING, Any, List, Optional, Type
 
-from typing import TYPE_CHECKING, Any, List, Type, Optional
+import requests
+
+from .constants import MEDIA_FIELD, PLACE_FIELD, POLL_FIELD, TWEET_EXPANSION, TWEET_FIELD, USER_FIELD
 from .dataclass import StreamRule
 from .errors import ConnectionException, pytwotException
-from .constants import (
-    MEDIA_FIELD,
-    PLACE_FIELD,
-    POLL_FIELD,
-    TWEET_EXPANSION,
-    TWEET_FIELD,
-    USER_FIELD,
-)
 from .tweet import Tweet
-
 
 if TYPE_CHECKING:
     from .http import HTTPClient

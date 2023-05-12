@@ -29,57 +29,58 @@ import io
 import logging
 import sys
 import time
-import requests
 from json import JSONDecodeError
-from typing import Any, List, NoReturn, Optional, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, List, NoReturn, Optional, Union
+
+import requests
 
 from .attachments import CTA, CustomProfile, File, Geo, Poll, QuickReply
 from .auth import OauthSession
-from .enums import ReplySetting, SpaceState, Granularity, JobType, JobStatus
-from .errors import (
-    BadRequests,
-    Conflict,
-    Forbidden,
-    NotFound,
-    TooManyRequests,
-    pytwotException,
-    Unauthorized,
-    FieldsTooLarge,
-    UnauthorizedForResource,
-    ResourceNotFound,
-    DisallowedResource,
-)
+from .compliance import Job
 from .constants import (
-    TWEET_EXPANSION,
-    SPACE_EXPANSION,
+    COMPLETE_SPACE_FIELD,
+    COMPLETE_TWEET_FIELD,
     LIST_EXPANSION,
-    PINNED_TWEET_EXPANSION,
+    LIST_FIELD,
     MEDIA_FIELD,
+    PINNED_TWEET_EXPANSION,
     PLACE_FIELD,
     POLL_FIELD,
+    SPACE_EXPANSION,
     SPACE_FIELD,
-    COMPLETE_SPACE_FIELD,
+    TOPIC_FIELD,
+    TWEET_EXPANSION,
     TWEET_FIELD,
-    COMPLETE_TWEET_FIELD,
     TWEET_FIELD_WITH_ORGANIC_METRICS,
     TWEET_FIELD_WITH_PROMOTED_METRICS,
     USER_FIELD,
-    TOPIC_FIELD,
-    LIST_FIELD,
 )
+from .enums import Granularity, JobStatus, JobType, ReplySetting, SpaceState
+from .errors import (
+    BadRequests,
+    Conflict,
+    DisallowedResource,
+    FieldsTooLarge,
+    Forbidden,
+    NotFound,
+    ResourceNotFound,
+    TooManyRequests,
+    Unauthorized,
+    UnauthorizedForResource,
+    pytwotException,
+)
+from .list import List as TwitterList
 from .message import DirectMessage, WelcomeMessage, WelcomeMessageRule
 from .parser import EventParser
-from .space import Space
-from .tweet import Tweet
-from .user import User, ClientAccount
-from .threads import ThreadManager
 from .relations import RelationUpdate
-from .list import List as TwitterList
-from .compliance import Job
+from .space import Space
+from .threads import ThreadManager
+from .tweet import Tweet
+from .user import ClientAccount, User
 
 if TYPE_CHECKING:
-    from .type import ID, Payload, ResponsePayload
     from .stream import Stream
+    from .type import ID, Payload, ResponsePayload
 
 _log = logging.getLogger(__name__)
 

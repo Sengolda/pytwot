@@ -27,9 +27,8 @@ import argparse
 import platform
 import sys
 
-import requests
-
 import pytwot
+import requests
 
 
 def show_version():

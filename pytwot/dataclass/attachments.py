@@ -24,7 +24,8 @@ SOFTWARE.
 """
 
 from dataclasses import dataclass
-from typing import Union, Optional
+from typing import Optional, Union
+
 from ..enums import ButtonType
 
 

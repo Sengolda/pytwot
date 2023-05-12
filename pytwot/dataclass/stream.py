@@ -25,6 +25,7 @@ SOFTWARE.
 
 from dataclasses import dataclass
 from typing import Optional
+
 from ..type import ID
 
 

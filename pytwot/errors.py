@@ -23,9 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import requests
-from typing import Optional
 from json import decoder
+from typing import Optional
+
+import requests
 
 
 class pytwotException(Exception):

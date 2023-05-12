@@ -23,8 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Any, Dict, Union, Optional
-
+from typing import Any, Dict, Optional, Union
 
 ID = Union[str, int]
 Payload = Dict[str, Any]

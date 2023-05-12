@@ -10,17 +10,17 @@ pytwot is a Synchronous python API wrapper for Twitter's API!
 import logging
 from typing import Literal, NamedTuple
 
-from .dataclass import *
 from .attachments import *
 from .auth import *
 from .client import *
 from .compliance import *
+from .constants import *
+from .dataclass import *
 from .entities import *
 from .enums import *
 from .environment import *
 from .errors import *
 from .events import *
-from .constants import *
 from .http import *
 from .list import *
 from .message import *

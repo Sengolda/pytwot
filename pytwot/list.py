@@ -28,13 +28,12 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING, Optional
 
+from .constants import PINNED_TWEET_EXPANSION, TWEET_EXPANSION, TWEET_FIELD, USER_FIELD
+from .objects import Comparable
+from .paginations import TweetPagination, UserPagination
+from .relations import RelationDelete, RelationFollow, RelationPin, RelationUpdate
 from .type import ID, Payload
 from .utils import time_parse_todt
-from .paginations import UserPagination, TweetPagination
-from .constants import TWEET_EXPANSION, USER_FIELD, TWEET_FIELD, PINNED_TWEET_EXPANSION
-from .relations import RelationUpdate, RelationDelete, RelationPin
-from .objects import Comparable
-from .relations import RelationFollow
 
 if TYPE_CHECKING:
     from .http import HTTPClient

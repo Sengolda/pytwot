@@ -24,11 +24,12 @@ SOFTWARE.
 """
 
 import datetime
-from typing import Union, Optional
-from .user import User
-from .tweet import Tweet
+from typing import Optional, Union
+
 from .enums import ActionEventType, UserActionEventType
+from .tweet import Tweet
 from .type import Payload
+from .user import User
 from .utils import time_parse_todt
 
 # Events type

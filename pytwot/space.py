@@ -24,22 +24,15 @@ SOFTWARE.
 """
 
 import datetime
-from typing import Any, Union, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
-from .enums import SpaceState
-from .utils import time_parse_todt
-from .user import User
-from .tweet import Tweet
-from .objects import Comparable
+from .constants import MEDIA_FIELD, PLACE_FIELD, POLL_FIELD, TWEET_EXPANSION, TWEET_FIELD, USER_FIELD
 from .dataclass import Topic
-from .constants import (
-    TWEET_EXPANSION,
-    USER_FIELD,
-    MEDIA_FIELD,
-    PLACE_FIELD,
-    POLL_FIELD,
-    TWEET_FIELD,
-)
+from .enums import SpaceState
+from .objects import Comparable
+from .tweet import Tweet
+from .user import User
+from .utils import time_parse_todt
 
 __all__ = ("Space",)
 

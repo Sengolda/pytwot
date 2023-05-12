@@ -25,11 +25,12 @@ SOFTWARE.
 
 from __future__ import annotations
 
-import logging
 import datetime
-from typing import Any, List, Dict, TYPE_CHECKING
-from .utils import time_parse_todt
+import logging
+from typing import TYPE_CHECKING, Any, Dict, List
+
 from .objects import Comparable
+from .utils import time_parse_todt
 
 if TYPE_CHECKING:
     from .client import Client

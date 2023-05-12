@@ -24,6 +24,7 @@ SOFTWARE.
 """
 
 from dataclasses import dataclass
+
 from ..type import ID
 
 

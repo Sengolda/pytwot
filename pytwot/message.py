@@ -28,12 +28,12 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from .dataclass import ApplicationInfo, InitiatedVia
 from .attachments import CTA, File, QuickReply
+from .dataclass import ApplicationInfo, InitiatedVia
 from .entities import Hashtag, Symbol, Url, UserMention
 from .enums import MessageEventTypeEnum, MessageTypeEnum
-from .user import User
 from .objects import Comparable
+from .user import User
 
 if TYPE_CHECKING:
     from .http import HTTPClient

@@ -25,11 +25,12 @@ SOFTWARE.
 
 from __future__ import annotations
 
-import threading
 import random
 import string
+import threading
 from concurrent.futures import ThreadPoolExecutor, wait
-from typing import Optional, Callable, Any
+from typing import Any, Callable, Optional
+
 from ..constants import ALL_COMPLETED
 
 __all__ = ("Executor", "ThreadManager")

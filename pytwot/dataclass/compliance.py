@@ -24,11 +24,11 @@ SOFTWARE.
 """
 
 import datetime
-
 from dataclasses import dataclass
 from typing import Optional
-from ..type import ID
+
 from ..enums import JobResultAction, JobResultActionReason
+from ..type import ID
 
 
 @dataclass

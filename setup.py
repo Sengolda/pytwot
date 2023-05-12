@@ -1,5 +1,6 @@
-from setuptools import setup
 import re
+
+from setuptools import setup
 
 short_description = "A Synchronous python API wrapper for twitter's api"
 version = ""

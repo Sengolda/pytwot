@@ -26,13 +26,14 @@ SOFTWARE.
 from __future__ import annotations
 
 import base64
+import datetime
 import random
 import string
-import datetime
-
 from random import randint
-from typing import Tuple, Optional, Literal, TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal, Optional, Tuple
+
 from requests_oauthlib import OAuth1
+
 from .errors import pytwotException
 
 if TYPE_CHECKING:

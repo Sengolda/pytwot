@@ -24,29 +24,30 @@ SOFTWARE.
 """
 
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
+from .dataclass import ApplicationInfo, Location, SleepTimeSettings, TimezoneInfo
 from .events import (
-    DirectMessageTypingEvent,
     DirectMessageReadEvent,
+    DirectMessageTypingEvent,
     TweetFavoriteActionEvent,
-    UserRevokeEvent,
-    UserFollowActionEvent,
-    UserUnfollowActionEvent,
     UserBlockActionEvent,
-    UserUnblockActionEvent,
+    UserFollowActionEvent,
     UserMuteActionEvent,
+    UserRevokeEvent,
+    UserUnblockActionEvent,
+    UserUnfollowActionEvent,
     UserUnmuteActionEvent,
 )
-from .message import Message, DirectMessage
-from .user import User
+from .message import DirectMessage, Message
 from .tweet import Tweet
-from .dataclass import TimezoneInfo, Location, SleepTimeSettings, ApplicationInfo
+from .user import User
 from .utils import convert
 
 if TYPE_CHECKING:
-    from .type import Payload
     from .http import HTTPClient
+    from .type import Payload
 
 __all__ = ("PayloadParser", "EventParser")
 
