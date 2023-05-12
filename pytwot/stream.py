@@ -130,7 +130,7 @@ class StreamConnection:
         http = self.http_client
         while self.running:
             try:
-                response = requests.get(
+                response = http.__session.get(
                     self.url,
                     headers={"Authorization": f"Bearer {http.bearer_token}"},
                     params={
@@ -216,7 +216,7 @@ class Stream:
         )
 
     @classmethod
-    def sample_stream(cls: Type[Stream], backfill_minutes: int = 0, reconnect_attempts: int = 15) -> Stream:
+    def sample(cls: Type[Stream], backfill_minutes: int = 0, reconnect_attempts: int = 15) -> Stream:
         """A class method that change the stream connection to a sample one, this would mean you dont have to set any stream rules. This would not recommended because it can make the progress of tweet cap much faster, if its out of limit you would not be able to stream.
 
         Parameters
