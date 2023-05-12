@@ -90,7 +90,8 @@ class StreamConnection:
         """
         return not self.running
 
-    def is_close(self) -> Optional[bool]:
+
+    def is_closed(self) -> Optional[bool]:
         """An alias to :class:`StreamConnection.closed`.
 
         Returns
