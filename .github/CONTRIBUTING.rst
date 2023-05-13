@@ -57,6 +57,15 @@ If you want to see what changes black will make, you can do:
     pip install black
     black --diff setup.py pytwot --line-length 120
 
+This project also uses isort for import sorting
+To run isort do:
+
+.. code:: bash
+
+    pip install isort
+    isort setup.py pytwot/*
+
+The configuration for isort is in the `.isort.cfg` file **DO NOT** modify this file, if you do please state in your pull request why you did
 
 Testing
 ==================
@@ -122,5 +131,3 @@ Submit your contribution
 
 #. Go to the web page of your fork and click the contrbuting button
    to send your changes for review.
-
-      Find more detailed information `creating a PR`.

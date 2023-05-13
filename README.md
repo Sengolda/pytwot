@@ -41,6 +41,17 @@ py -m pip install pytwot
 python3 -m pip install pytwot
 ```
 
+## Events support
+PyTwot supports twitter events to use them you have to install extra requirements, to do so please use:
+
+```bash
+# Windows
+py -m pip install pytwot[events]
+
+# Linux/MacOS
+python3 -m pip install pytwot[evemts]
+```
+
 ## Usage
 
 Before using pytwot you have to setup an application [here](https://apps.twitter.com). For a more comfortable experience, you can create an application inside a project. Most endpoints require the client to have `read`, `write` and `direct_messages` app permissions and elevated access type. For more accessibility you can create a dev environment to support events and other premium endpoints. If you have any questions, please open an issue or ask in the official [pytwot Discord](https://discord.gg/nxZCE9EbVr).
@@ -73,7 +84,8 @@ You can check in the `examples` directory for more example code.
 
 # Contribute
 
-You can Contribute or open an issue regarding pytwot in our [GitHub repository](https://github.com/sengolda/pytwot)!
+- You can contribute or open an issue regarding pytwot in our [GitHub repository](https://github.com/sengolda/pytwot)!
+- If you are however going to contribute please read the [contributer's guide](CONTRIBUTING.rst) beforehand.
 
 # Licence & Copyright
 
