@@ -101,11 +101,7 @@ def compose_tweet(text: Optional[str] = None) -> str:
     """
     if text:
         text = text.replace(" ", "%20")
-    return (
-        "https://twitter.com/intent/tweet"
-        if not text
-        else f"https://twitter.com/intent/tweet" + f"?text={text}"
-    )
+    return "https://twitter.com/intent/tweet" if not text else f"https://twitter.com/intent/tweet" + f"?text={text}"
 
 
 def compose_user_action(user_id: str, action: str, text: str = None) -> str:

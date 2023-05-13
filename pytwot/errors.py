@@ -69,7 +69,7 @@ class HTTPException(pytwotException):
         self,
         response: Optional[requests.models.Response] = None,
         message: str = None,
-    ) -> None: 
+    ) -> None:
         self.response = response
         self.message = message
         self.detail = None
