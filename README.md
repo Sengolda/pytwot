@@ -49,7 +49,7 @@ PyTwot supports twitter events to use them you have to install extra requirement
 py -m pip install pytwot[events]
 
 # Linux/MacOS
-python3 -m pip install pytwot[evemts]
+python3 -m pip install pytwot[events]
 ```
 
 ## Usage
