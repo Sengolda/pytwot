@@ -105,8 +105,6 @@ def compose_tweet(text: Optional[str] = None) -> str:
         "https://twitter.com/intent/tweet"
         if not text
         else f"https://twitter.com/intent/tweet" + f"?text={text}"
-        if text
-        else f"https://twitter.com/intent/tweet"
     )
 
 
