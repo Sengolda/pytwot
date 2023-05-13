@@ -47,7 +47,7 @@ class Environment(Comparable):
 
     __slots__ = ("_payload", "client")
 
-    def __init__(self, data: Dict[str, Any], *, client: Client):
+    def __init__(self, data: Dict[str, Any], *, client: Client) -> None:
         self._payload = data
         self.client = client
         super().__init__(self.name)

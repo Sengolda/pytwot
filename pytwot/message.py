@@ -50,7 +50,7 @@ class Message(Comparable):
 
     __slots__ = ("_text", "_id", "_type")
 
-    def __init__(self, text: Optional[str], id: ID, type: int):
+    def __init__(self, text: Optional[str], id: ID, type: int) -> None:
         super().__init__(id)
         self._text = text
         self._id = id
@@ -101,7 +101,7 @@ class DirectMessage(Message):
         "http_client",
     )
 
-    def __init__(self, data: Dict[str, Any], *, http_client: HTTPClient):
+    def __init__(self, data: Dict[str, Any], *, http_client: HTTPClient) -> None:
         self.__original_payload = data
         self._payload = data.get("event", None) or data
         self.__message_create = self._payload.get("message_create", None)

@@ -100,7 +100,7 @@ class HTTPClient:
         client_secret: Optional[str] = None,
         use_bearer_only: bool = False,
         handle_ratelimits: bool = True,
-    ):
+    ) -> None:
         self.credentials = {
             "bearer_token": bearer_token,
             "consumer_key": consumer_key,
@@ -341,7 +341,7 @@ class HTTPClient:
 
             return res
 
-    def upload(self, file: File, command: str):
+    def upload(self, file: File, command: str) -> None:
         assert command.upper() in {"INIT", "APPEND", "FINALIZE", "STATUS"}
         thread_session = self.thread_manager.generate_thread_session()
 
@@ -502,7 +502,7 @@ class HTTPClient:
         self.upload(file, "FINALIZE")
         return file
 
-    def fetch_me(self):
+    def fetch_me(self) -> User:
         data = self.request(
             "GET",
             "2",
@@ -658,7 +658,7 @@ class HTTPClient:
         )
         return TwitterList(res, http_client=self)
 
-    def handle_events(self, payload: Payload):
+    def handle_events(self, payload: Payload) -> None:
         if payload.get("direct_message_events"):
             self.event_parser.parse_direct_message_create(payload)
 
@@ -1062,7 +1062,7 @@ class HTTPClient:
         file: Optional[File] = None,
         quick_reply: Optional[QuickReply] = None,
         cta: Optional[CTA] = None,
-    ):
+    ) -> None:
         thread_session = self.thread_manager.generate_thread_session()
         executor = self.thread_manager.create_new_executor(
             thread_name="update-welcome-message-file-request", session_id=thread_session

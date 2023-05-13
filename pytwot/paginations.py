@@ -65,7 +65,7 @@ class Pagination:
         endpoint_request: str,
         http_client: HTTPClient,
         **kwargs: Any,
-    ):
+    ) -> None:
         self.__original_payload = data
         self._payload = self.__original_payload.get("data")
         self._meta = self.__original_payload.get("meta")
@@ -81,20 +81,20 @@ class Pagination:
         self.pages_cache = {1: {obj.id: obj for obj in self.content}}
 
     @property
-    def original_payload(self):
+    def original_payload(self) -> Payload:
         return self.__original_payload
 
     @original_payload.setter
-    def original_payload(self, other: dict):
+    def original_payload(self, other: dict) -> Payload:
         self.__original_payload = other
         return self.original_payload
 
     @property
-    def payload(self):
+    def payload(self) -> dict:
         return self._payload
 
     @payload.setter
-    def payload(self, other: dict):
+    def payload(self, other: dict) -> dict:
         self._payload = other
         return self._payload
 
@@ -158,10 +158,10 @@ class Pagination:
             return None
         return list(content.values())
 
-    def next_page(self):
+    def next_page(self) -> None:
         raise NotImplementedError
 
-    def previous_page(self):
+    def previous_page(self) -> None:
         raise NotImplementedError
 
 
@@ -180,12 +180,12 @@ class UserPagination(Pagination):
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self, data, **kwargs):
+    def __init__(self, data, **kwargs) -> None:
         from .user import User  # Avoid circular import error.
 
         super().__init__(data, item_type=User, **kwargs)
 
-    def next_page(self):
+    def next_page(self) -> None:
         """Change `content` property to the next page's contents..
 
         Raises
@@ -222,7 +222,7 @@ class UserPagination(Pagination):
         if not previous_content[0] == self.content[0]:
             self.pages_cache[len(self.pages_cache) + 1] = {user.id: user for user in self.content}
 
-    def previous_page(self):
+    def previous_page(self) -> None:
         """Change `content` property to the previous page's contents..
 
         Raises
@@ -271,7 +271,7 @@ class TweetPagination(Pagination):
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self, data, **kwargs):
+    def __init__(self, data, **kwargs) -> None:
         from .tweet import Tweet  # Avoid circular import error.
 
         super().__init__(data, item_type=Tweet, **kwargs)
@@ -288,7 +288,7 @@ class TweetPagination(Pagination):
             for data in self.http_client.payload_parser.insert_pagination_object_author(self.original_payload)
         ]
 
-    def next_page(self):
+    def next_page(self) -> None:
         """Change `content` property to the next page's contents..
 
         Raises
@@ -325,7 +325,7 @@ class TweetPagination(Pagination):
         if not previous_content[0] == self.content[0]:
             self.pages_cache[len(self.pages_cache) + 1] = {tweet.id: tweet for tweet in self.content}
 
-    def previous_page(self):
+    def previous_page(self) -> None:
         """Change `content` property to the previous page's contents..
 
         Raises
@@ -373,7 +373,7 @@ class ListPagination(Pagination):
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self, data, **kwargs):
+    def __init__(self, data, **kwargs) -> None:
         from .list import List as TwitterList  # Avoid circular import error
 
         super().__init__(data, item_type=TwitterList, **kwargs)
@@ -390,7 +390,7 @@ class ListPagination(Pagination):
             for data in self.http_client.payload_parser.insert_pagination_object_author(self.original_payload)
         ]
 
-    def next_page(self):
+    def next_page(self) -> None:
         """Change `content` property to the next page's contents..
 
         Raises
@@ -429,7 +429,7 @@ class ListPagination(Pagination):
                 _TwitterList.id: _TwitterList for _TwitterList in self.content
             }
 
-    def previous_page(self):
+    def previous_page(self) -> None:
         """Change `content` property to the previous page's contents..
 
         Raises
@@ -479,13 +479,13 @@ class MessagePagination(Pagination):
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self, data, **kwargs):
+    def __init__(self, data, **kwargs) -> None:
         from .message import DirectMessage  # Avoid circular import error.
 
         data = kwargs.get("http_client").payload_parser.parse_message_to_pagination_data(data)
         super().__init__(data, item_type=DirectMessage, **kwargs)
 
-    def next_page(self):
+    def next_page(self) -> None:
         """Change `content` property to the next page's contents..
 
         Raises
@@ -522,7 +522,7 @@ class MessagePagination(Pagination):
         if not previous_content[0] == self.content[0]:
             self.pages_cache[len(self.pages_cache) + 1] = {message.id: message for message in self.content}
 
-    def previous_page(self):
+    def previous_page(self) -> None:
         """Change `content` property to the previous page's contents..
 
         Raises

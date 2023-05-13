@@ -52,7 +52,7 @@ class List(Comparable):
 
     __slots__ = ("__original_payload", "_payload", "http_client")
 
-    def __init__(self, data: Payload, *, http_client: HTTPClient):
+    def __init__(self, data: Payload, *, http_client: HTTPClient) -> None:
         self.__original_payload = data
         self._payload = self.__original_payload.get("data") or self.__original_payload
         self.http_client = http_client
@@ -312,7 +312,7 @@ class List(Comparable):
 
         return RelationPin(res)
 
-    def add_members(self, *users: User):
+    def add_members(self, *users: User) -> None:
         """Adds members to the list.
 
         Parameters
@@ -339,7 +339,7 @@ class List(Comparable):
             )
         executor.wait_for_futures()
 
-    def remove_members(self, *users: User):
+    def remove_members(self, *users: User) -> None:
         """Removes members to the list.
 
         Parameters

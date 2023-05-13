@@ -47,7 +47,7 @@ from .utils import convert
 
 if TYPE_CHECKING:
     from .http import HTTPClient
-    from .type import Payload
+    from .type import Payload, ResponsePayload
 
 __all__ = ("PayloadParser", "EventParser")
 
@@ -58,7 +58,7 @@ class PayloadParser:
     def __init__(self, http_client: HTTPClient):
         self.http_client = http_client
 
-    def parse_user_payload(self, payload: Payload):
+    def parse_user_payload(self, payload: Payload) -> ResponsePayload:
         copy = payload.copy()
         copy["public_metrics"] = {
             "followers_count": copy.get("followers_count"),
@@ -66,16 +66,17 @@ class PayloadParser:
             "tweet_count": copy.get("statuses_count"),
             "listed_count": 0,
         }
-        if "created_timestamp" in copy.keys():
+        keys = copy.keys()
+        if "created_timestamp" in keys:
             copy["created_at"] = copy.get("created_timestamp")
-        if "screen_name" in copy.keys():
+        if "screen_name" in keys:
             copy["username"] = copy.get("screen_name")
 
-        if "profile_image_url_https" in copy.keys():
+        if "profile_image_url_https" in keys:
             copy["profile_image_url"] = copy.get("profile_image_url_https")
         return copy
 
-    def parse_tweet_payload(self, payload: Payload):
+    def parse_tweet_payload(self, payload: Payload) -> ResponsePayload:
         payload["public_metrics"] = {
             "quote_count": payload.get("quote_count"),
             "reply_count": payload.get("reply_count"),
@@ -95,14 +96,14 @@ class PayloadParser:
 
         return payload
 
-    def parse_time_zone_payload(self, payload: Payload):
+    def parse_time_zone_payload(self, payload: Payload) -> ResponsePayload:
         payload["name_info"] = payload.get("tzinfo_name")
         payload["timezone"] = TimezoneInfo(**payload.get("time_zone"))
         payload.pop("time_zone")
         payload.pop("tzinfo_name")
         return payload
 
-    def parse_trend_location_payload(self, payload: Payload):
+    def parse_trend_location_payload(self, payload: Payload) -> ResponsePayload:
         payload["place_type"] = payload["placeType"]
         payload["country_code"] = payload["countryCode"]
         payload.pop("placeType")
@@ -111,11 +112,11 @@ class PayloadParser:
         payload["location"] = Location(**payload)
         return payload
 
-    def parse_sleep_time_payload(self, payload: Payload):
+    def parse_sleep_time_payload(self, payload: Payload) -> ResponsePayload:
         payload["sleep_time_setting"] = SleepTimeSettings(**payload["sleep_time"])
         payload.pop("sleep_time")
 
-    def insert_object_author(self, payload: Payload, author: User) -> Payload:
+    def insert_object_author(self, payload: Payload, author: User) -> ResponsePayload:
         payload["includes"] = {}
         payload["includes"]["users"] = [author._User__original_payload]
         return payload
@@ -129,7 +130,7 @@ class PayloadParser:
             fulldata[index]["includes"]["users"] = [payload.get("includes", {}).get("users", [None])[0]]
         return fulldata
 
-    def parse_message_to_pagination_data(self, data: Payload):
+    def parse_message_to_pagination_data(self, data: Payload) -> ResponsePayload:
         data["meta"] = {"next_token": data.get("next_cursor"), "previous_token": data.get("previous_cursor")}
 
         if data.get("events"):
@@ -165,7 +166,7 @@ class PayloadParser:
                         message_create["target"]["source_application"] = app
         return data
 
-    def parse_embed_data(self, payload: Payload) -> Payload:
+    def parse_embed_data(self, payload: Payload) -> ResponsePayload:
         payload["status_code"] = payload.get("status") or payload.get("status_code")
         if payload.get("status"):
             del payload["status"]
@@ -181,7 +182,7 @@ class PayloadParser:
 class EventParser:
     __slots__ = ("payload_parser", "http_client", "client_id")
 
-    def __init__(self, http_client: HTTPClient):
+    def __init__(self, http_client: HTTPClient) -> None:
         self.payload_parser = PayloadParser(http_client)
         self.http_client = http_client
         try:
@@ -189,7 +190,7 @@ class EventParser:
         except AttributeError:
             self.client_id = int(self.http_client.fetch_me().id)
 
-    def parse_direct_message_create(self, direct_message_payload: Payload):
+    def parse_direct_message_create(self, direct_message_payload: Payload) -> None:
         event_payload = {"event": direct_message_payload.get("direct_message_events")[0]}
         users = direct_message_payload.get("users")
 
@@ -228,7 +229,7 @@ class EventParser:
         self.http_client.message_cache[direct_message.id] = direct_message
         self.http_client.dispatch("direct_message", direct_message)
 
-    def parse_direct_message_typing(self, typing_payload: Payload):
+    def parse_direct_message_typing(self, typing_payload: Payload) -> None:
         event_payload = typing_payload.get("direct_message_indicate_typing_events")[0]
         users = typing_payload.get("users")
 
@@ -255,7 +256,7 @@ class EventParser:
         payload = DirectMessageTypingEvent(event_payload, http_client=self.http_client)
         self.http_client.dispatch("typing", payload)
 
-    def parse_direct_message_read(self, read_payload: Payload):
+    def parse_direct_message_read(self, read_payload: Payload) -> None:
         event_payload = read_payload.get("direct_message_mark_read_events")[0]
         users = read_payload.get("users")
 
@@ -282,11 +283,11 @@ class EventParser:
         payload = DirectMessageReadEvent(event_payload, http_client=self.http_client)
         self.http_client.dispatch("read", payload)
 
-    def parse_user_revoke(self, action_payload: Payload):
+    def parse_user_revoke(self, action_payload: Payload) -> None:
         action = UserRevokeEvent(action_payload)
         self.http_client.dispatch("user_revoke", action)
 
-    def parse_user_action(self, action_payload: Payload, action_type):
+    def parse_user_action(self, action_payload: Payload, action_type) -> None:
         action_payload = action_payload.copy()
         event_payload = action_payload.get(action_type)[0]
         action_type = event_payload.get("type")
@@ -332,13 +333,13 @@ class EventParser:
             action = UserUnmuteActionEvent(action_payload)
             self.http_client.dispatch("user_unmute", action)
 
-    def parse_tweet_create(self, tweet_payload: Payload):
+    def parse_tweet_create(self, tweet_payload: Payload) -> None:
         tweet_payload = self.payload_parser.parse_tweet_payload(tweet_payload.get("tweet_create_events")[0])
         tweet = Tweet(tweet_payload, http_client=self.http_client)
         self.http_client.tweet_cache[tweet.id] = tweet
         self.http_client.dispatch("tweet_create", tweet)
 
-    def parse_tweet_delete(self, tweet_payload: Payload):
+    def parse_tweet_delete(self, tweet_payload: Payload) -> None:
         event_payload = tweet_payload.get("tweet_delete_events")[0]
         tweet_id = event_payload.get("status").get("id")
         tweet = self.http_client.tweet_cache.get(int(tweet_id))
@@ -354,7 +355,7 @@ class EventParser:
             tweet.deleted_timestamp = int(event_payload.get("timestamp_ms"))
             self.http_client.dispatch("tweet_delete", tweet)
 
-    def parse_favorite_tweet(self, favorite_payload: Payload):
+    def parse_favorite_tweet(self, favorite_payload: Payload) -> None:
         action_payload = favorite_payload.copy()
         event_payload = favorite_payload.get("favorite_events")[0]
         tweet = Tweet(self.payload_parser.parse_tweet_payload(event_payload.get("favorited_status")))

@@ -34,11 +34,11 @@ class Comparable:
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self, o: object):
+    def __init__(self, o: object) -> None:
         self.o = o
 
-    def __eq__(self, other: Any):
+    def __eq__(self, other: Any) -> bool:
         return self.o == other
 
-    def __ne__(self, other: Any):
+    def __ne__(self, other: Any) -> bool:
         return self.o != other

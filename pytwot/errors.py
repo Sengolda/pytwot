@@ -38,7 +38,7 @@ class pytwotException(Exception):
     def __init__(
         self,
         message: str = None,
-    ):
+    ) -> None:
         self.message = message
         super().__init__(self.message)
 
@@ -53,7 +53,7 @@ class APIException(pytwotException):
         self,
         response: Optional[requests.models.Response] = None,
         message: str = "No Error Message Provided",
-    ):
+    ) -> None:
         self.res = response
         self.message = message
         super().__init__(f"API returned an Exception: {self.message}")
@@ -69,7 +69,7 @@ class HTTPException(pytwotException):
         self,
         response: Optional[requests.models.Response] = None,
         message: str = None,
-    ):
+    ) -> None: 
         self.response = response
         self.message = message
         self.detail = None
@@ -194,7 +194,7 @@ class NoPageAvailable(APIException):
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(message="Pagination has no more page available!")
 
 
@@ -204,7 +204,7 @@ class UnauthorizedForResource(APIException):
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self, message):
+    def __init__(self, message) -> None:
         super().__init__(message=message)
 
 
@@ -218,7 +218,7 @@ class ResourceNotFound(APIException):
         Changed name from `NotFoundError` to `ResourceNotFound`
     """
 
-    def __init__(self, message):
+    def __init__(self, message) -> None:
         super().__init__(message=message)
 
 
@@ -228,5 +228,5 @@ class DisallowedResource(APIException):
     .. versionadded:: 1.5.0
     """
 
-    def __init__(self, message):
+    def __init__(self, message) -> None:
         super().__init__(message=message)
